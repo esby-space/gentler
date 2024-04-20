@@ -7,12 +7,10 @@ import mdx from "@astrojs/mdx";
 
 // https://astro.build/config
 export default defineConfig({
+    site: "https://gentler.esby.space",
     integrations: [tailwind(), mdx()],
     markdown: {
         remarkPlugins: [math],
         rehypePlugins: [katex]
     },
-
-    site: "https://esby-space.github.io",
-    base: "gentler",
 });
