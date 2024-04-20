@@ -1,0 +1,29 @@
+<!-- <svg viewBox="194.918 199.248 148.256 148.146" xmlns="http://www.w3.org/2000/svg" id="moon" class="fixed top-8 right-8 w-8 cursor-pointer"> -->
+<!--     <path d="M 269.68 347.394 C 228.39 347.394 194.918 313.922 194.918 272.632 C 194.918 236.254 220.9 205.944 255.319 199.248 C 247.427 209.492 242.757 222.182 242.757 235.923 C 242.757 269.926 271.35 297.491 306.622 297.491 C 320.216 297.491 332.818 293.396 343.174 286.417 C 336.705 321.122 306.261 347.394 269.68 347.394 Z"> -->
+<!-- </svg> -->
+
+<svg id="moon" class="w-8 cursor-pointer fill-black dark:fill-white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 22C17.5228 22 22 17.5228 22 12C22 11.5373 21.3065 11.4608 21.0672 11.8568C19.9289 13.7406 17.8615 15 15.5 15C11.9101 15 9 12.0899 9 8.5C9 6.13845 10.2594 4.07105 12.1432 2.93276C12.5392 2.69347 12.4627 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path> </g>
+</svg>
+
+<script>
+    const moon = document.querySelector("#moon") as HTMLElement;
+    const body = document.querySelector("body")!;
+    const event = new Event("dark");
+
+    if (document.location.pathname == "/") moon.style.visibility = "hidden";
+    if (sessionStorage.getItem("dark") == "true") body.classList.add("dark");
+
+    moon.addEventListener("click", () => {
+        if (sessionStorage.getItem("dark") == "true") {
+            body.classList.remove("dark");
+            sessionStorage.removeItem("dark");
+        } else {
+            body.classList.add("dark");
+            sessionStorage.setItem("dark", "true");
+        }
+
+        window.dispatchEvent(event);
+    });
+</script>
+

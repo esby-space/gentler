@@ -1,0 +1,40 @@
+---
+import { getCollection } from "astro:content";
+type PageInfo = { title: string, slug: string, section: number };
+
+const pages = await getCollection("mechanics");
+
+const chapters: Record<string, PageInfo[]> = {};
+for (const page of pages) {
+    const chapter: string = page.data.chapter.toString();
+    const pages = chapters[chapter];
+    if (!pages) chapters[chapter] = [];
+
+    chapters[chapter]
+        .push({
+            title: page.data.title,
+            slug: page.slug,
+            section: page.data.section
+        });
+}
+---
+
+<nav class="min-h-screen max-w-96 overflow-scroll p-4 bg-red-800 text-white data-[close=closed]:max-w-0 data-[close=closed]:p-0" data-close="closed">
+    <a href="/" class="block text-3xl font-bold px-2 py-4">A (Gentler) Introduction</a>
+    {
+        Object.keys(chapters).map((chapter) => {
+            return <details open class="p-2">
+                <summary class="text-xl font-bold">Chapter {chapter}</summary>
+                <ul>
+                    {
+                        chapters[chapter].map((page) => {
+                            return <li class="p-1 list-inside text-red-100 hover:text-white">
+                                <a href={"/" + page.slug}>{chapter}.{page.section} {page.title}</a>
+                            </li>
+                        })
+                    }
+                </ul>
+            </details>
+        })
+    }
+</nav>

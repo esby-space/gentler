@@ -1,0 +1,41 @@
+---
+import Nav from "../components/Nav.astro";
+import Dark from "../components/Dark.astro";
+import Close from "../components/Close.astro";
+
+type Props = { title: string };
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+
+        <link href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" rel="stylesheet">
+        <script is:inline src="/lib/nutshell.min.js"></script>
+        <script is:inline>
+            Nutshell.setOptions({ dontEmbedHeadings: true });
+        </script>
+
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<title>{title}</title>
+	</head>
+
+	<body class="flex h-screen overflow-hidden">
+        <Nav />
+        <main class="relative grow dark:bg-zinc-900">
+            <div class="absolute flex align-center justify-between p-8 w-full">
+                <Close />
+                <Dark />
+            </div>
+            <div class="overflow-y-scroll h-full">
+                <slot />
+            </div>
+        </main>
+	</body>
+</html>
+

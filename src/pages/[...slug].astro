@@ -1,0 +1,37 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+import Next from "../components/Next.astro";
+
+export async function getStaticPaths() {
+    const pages = await getCollection("mechanics");
+    return pages.map((page) => ({
+        params: { slug: page.slug },
+        props: { page }
+    }));
+}
+
+const { page } = Astro.props;
+const { Content } = await page.render();
+---
+
+<Layout title={page.data.title}>
+    <article class="mx-auto p-16 prose prose-lg dark:prose-invert">
+        <Content />
+        <Next page={page} />
+    </article>
+</Layout>
+
+<style is:global>
+    details {
+        @apply border border-red-800 p-4 rounded;
+    }
+
+    summary {
+        @apply font-bold;
+    }
+
+    .nutshell-expandable {
+        @apply no-underline;
+    }
+</style>

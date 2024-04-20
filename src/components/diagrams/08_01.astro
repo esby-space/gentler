@@ -1,0 +1,50 @@
+<div>
+    <canvas id="fixed-axis" class="w-full aspect-video"></canvas>
+    <div class="flex justify-evenly pb-2">
+        <span>Fixed Axis Rotation</span>
+        <span>Rotating Axis Rotation (?)</span>
+    </div>
+</div>
+
+<script>
+    import { Vector, Camera } from "../../panda/math";
+    import { Wheel } from "../../panda/mesh";
+    import { Canvas } from "../../panda/canvas";
+
+    const element = document.querySelector("#fixed-axis") as HTMLCanvasElement;
+    const canvas = new Canvas(element);
+
+    const camera = new Camera(new Vector(), 1.5);
+
+    const wheel1 = new Wheel(new Vector(), 0, 0, new Vector(0, 0, 0));
+    const wheel2 = new Wheel(new Vector(), 0, 0, new Vector(0, 0, 0));
+    wheel1.globalRotation = new Vector(0, Math.PI / 4, 0);
+
+    const omega = new Vector(0, 0, 1);
+    const Omega = new Vector(0, -0.5, 0);
+
+    canvas.run(setup, draw);
+
+    function setup(): void {
+        camera.width = canvas.width;
+        camera.position.x = canvas.width / 2;
+        camera.position.y = canvas.height / 2;
+
+        wheel1.scale = new Vector(canvas.height * 0.4, canvas.height * 0.4, 20);
+        wheel1.globalPosition = new Vector(-canvas.width / 4, 0, 0);
+        wheel2.scale = new Vector(canvas.height * 0.4, canvas.height * 0.4, 20);
+        wheel2.globalPosition = new Vector(canvas.width / 4, 0, 0);
+    }
+    
+    function draw(dt: number): void {
+        canvas.context.clearRect(0, 0, canvas.width, canvas.height);
+
+        wheel1.rotation = wheel1.rotation.add(omega.scale(dt));
+        wheel2.rotation = wheel2.rotation.add(omega.scale(dt));
+        wheel2.globalRotation = wheel2.globalRotation.add(Omega.scale(dt));
+
+        wheel1.draw(canvas.context, camera);
+        wheel2.draw(canvas.context, camera);
+    }
+</script>
+
