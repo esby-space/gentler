@@ -32,11 +32,11 @@ async function getChapterLength(chapter: number): Promise<number> {
 ---
 
 <div class="flex justify-center gap-4 mt-16">
-    { previous && <a href={"/" + previous.slug} class="border hover:border-red-800 p-4 no-underline rounded">
+    { previous && <a href={"/gentler/" + previous.slug} class="border hover:border-red-800 p-4 no-underline rounded">
         <span class="text-gray-600 dark:text-gray-400">&larr; Previous</span><br />
         <span class="text-xl">{previous.data.chapter + "." + previous.data.section + " " + previous.data.title}</span>
     </a> }
-    { next && <a href={"/" + next.slug} class="border hover:border-red-800 p-4 no-underline rounded text-right">
+    { next && <a href={"/gentler/" + next.slug} class="border hover:border-red-800 p-4 no-underline rounded text-right">
         <span class="text-gray-700 dark:text-gray-300">Next &rarr;</span><br />
         <span class="text-xl">{next.data.chapter + "." + next.data.section + " " + next.data.title}</span>
     </a> }
